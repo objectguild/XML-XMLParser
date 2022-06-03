@@ -227,6 +227,33 @@ XMLNestedStreamReader >> newWriteStream [
 
 { #category : #accessing }
 XMLNestedStreamReader >> next [
+
+	^ self nextNormalizeLineEnding: true
+]
+
+{ #category : #accessing }
+XMLNestedStreamReader >> next: anInteger [
+	| writeStream i |
+
+	writeStream := self newWriteStream.
+	i := 0.
+	[self atEnd
+		or: [i >= anInteger]]
+		whileFalse: [
+			writeStream nextPut: self next.
+			i := i + 1].
+	^ writeStream contents.
+]
+
+{ #category : #accessing }
+XMLNestedStreamReader >> nextChar [
+
+	^ self nextNormalizeLineEnding: false
+]
+
+{ #category : #accessing }
+XMLNestedStreamReader >> nextNormalizeLineEnding: aBoolean [
+
 	| nextChar |
 
 	peekChar
@@ -236,7 +263,7 @@ XMLNestedStreamReader >> next [
 					self hasNextAfterPoppingStreamsAtEnd
 						ifFalse: [^ nil]].
 			nextChar := stream next.
-			isExternal
+			isExternal & aBoolean 
 				ifTrue: [
 					currentPosition := currentPosition + 1.
 					nextChar == LFCharacter
@@ -257,7 +284,7 @@ XMLNestedStreamReader >> next [
 		ifNotNil: [
 			nextChar := peekChar.
 			peekChar := nil.
-			isExternal
+			isExternal & aBoolean 
 				ifTrue: [
 					currentPosition := currentPosition + 1.
 					nextChar == normalizedLineEndingChar
@@ -271,20 +298,6 @@ XMLNestedStreamReader >> next [
 				ifFalse: [self errorReadLimitExceeded]].
 
 	^ nextChar.
-]
-
-{ #category : #accessing }
-XMLNestedStreamReader >> next: anInteger [
-	| writeStream i |
-
-	writeStream := self newWriteStream.
-	i := 0.
-	[self atEnd
-		or: [i >= anInteger]]
-		whileFalse: [
-			writeStream nextPut: self next.
-			i := i + 1].
-	^ writeStream contents.
 ]
 
 { #category : #accessing }
