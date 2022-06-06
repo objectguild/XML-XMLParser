@@ -1077,7 +1077,7 @@ XMLWellFormedParserTokenizer >> nextCDataSection [
 	self expectNextAll: '[CDATA['.
 	characterStream reset.
 	closingBracketsRead := 0.
-	[(nextChar := streamReader nextChar) == nil
+	[(nextChar := streamReader next) == nil
 		or: [closingBracketsRead == 2
 			and: [nextChar == $>]]]
 		whileFalse: [
