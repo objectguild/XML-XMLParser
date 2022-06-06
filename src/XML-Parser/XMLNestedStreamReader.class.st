@@ -236,7 +236,7 @@ XMLNestedStreamReader >> next [
 					self hasNextAfterPoppingStreamsAtEnd
 						ifFalse: [^ nil]].
 			nextChar := stream next.
-			isExternal & aBoolean 
+			isExternal 
 				ifTrue: [
 					currentPosition := currentPosition + 1.
 					nextChar == LFCharacter
@@ -257,7 +257,7 @@ XMLNestedStreamReader >> next [
 		ifNotNil: [
 			nextChar := peekChar.
 			peekChar := nil.
-			isExternal & aBoolean 
+			isExternal 
 				ifTrue: [
 					currentPosition := currentPosition + 1.
 					nextChar == normalizedLineEndingChar
