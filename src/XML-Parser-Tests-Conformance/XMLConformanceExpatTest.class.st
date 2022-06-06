@@ -4891,12 +4891,12 @@ XMLConformanceExpatTest class >> sourcevalidsa115xml [
 { #category : #'xml source' }
 XMLConformanceExpatTest class >> sourcevalidsa116xml [
 	"Source file: xmltest/valid/sa/116.xml"
-	"Added fix for linefeed vs carriage return, since it won't survive git handling."
 
 	^ '<!DOCTYPE doc [
 <!ELEMENT doc (#PCDATA)>
 ]>
-<doc><![CDATA[', Character linefeed asString ,']]></doc>
+<doc><![CDATA[
+]]></doc>
 '
 ]
 
